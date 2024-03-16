@@ -7,14 +7,17 @@ def get_dimensions():
         exit()
     return rows
 
-def construct_matrix(size):
-    matrix = []
-    for i in range(size):
-        raw = input(f"Enter the values for row {i+1} separated by a space: ")
-        print(raw)
-        row  = raw.split()
+def construct_matrix():
+    with open("matrix_input.txt", "r") as file:
+        matrix = []
+        row = file.readline().split()
+        size = len(row)
         row = list(map(int, row))
         matrix.append(row)
+        for i in range(size-1):
+            row = file.readline().split()
+            row = list(map(int, row))
+            matrix.append(row)
     return matrix
 
 def get_minor(matrix, row, column):
@@ -41,7 +44,6 @@ def det(matrix):
 
 
 if __name__ == "__main__":
-    size = get_dimensions()
-    matrix = construct_matrix(size)
+    matrix = construct_matrix()
     determinant = det(matrix)
     print(f"The determinant of the matrix is: {determinant}")
