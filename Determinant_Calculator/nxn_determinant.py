@@ -7,8 +7,8 @@ def get_dimensions():
         exit()
     return rows
 
-def construct_matrix():
-    with open("matrix_input.txt", "r") as file:
+def construct_matrix(file):
+    with open(file, "r") as file:
         matrix = []
         row = file.readline().split()
         size = len(row)
@@ -50,6 +50,6 @@ def det(matrix):
 
 
 if __name__ == "__main__":
-    matrix = construct_matrix()
+    matrix = construct_matrix("matrix_input.txt")
     determinant = det(matrix)
     print(f"The determinant of the matrix is: {determinant}")
