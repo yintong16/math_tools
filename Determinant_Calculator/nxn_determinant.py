@@ -28,6 +28,11 @@ def get_minor(matrix, row, column):
             minor.append(matrix[i][:column] + matrix[i][column+1:])
     return minor
 
+#def fast_det(matrix):
+
+
+
+
 def det(matrix):
     #this function calculates the determinant of a n x n matrix recursively
     #base case
@@ -39,7 +44,8 @@ def det(matrix):
     else:
         determinant = 0
         for i in range(len(matrix)):
-            determinant += ((-1)**i) * matrix[0][i] * det(get_minor(matrix, 0, i))
+            if matrix[0][i] != 0:
+                determinant += ((-1)**i) * matrix[0][i] * det(get_minor(matrix, 0, i))
         return determinant
 
 
