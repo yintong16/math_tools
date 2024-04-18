@@ -25,4 +25,3 @@ if __name__ == "__main__":
     index_calc(g, p, h)
 
 
-
