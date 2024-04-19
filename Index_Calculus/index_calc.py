@@ -24,4 +24,3 @@ if __name__ == "__main__":
     h = 9
     index_calc(g, p, h)
 
-
