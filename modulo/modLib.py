@@ -1,5 +1,5 @@
 
-import math
+import math # only for testing purposes
 
 def isPrime(a):
     #returns True if a is a prime number, False otherwise
@@ -71,8 +71,8 @@ def littleFermat(p, a, power):
             return a**power % p
     else:
         #if a is not coprime to p
-        #use the second part of Fermat's little theorem
-        #that is a^p = a mod p
+        #use a little corallary from Fermat's little theorem
+        #that is a^p = a mod p for all a in Z
         if power >= p:
             return littleFermat(p, a, (power%p) + (power//p))
         else:
@@ -80,15 +80,24 @@ def littleFermat(p, a, power):
             
             
     
-def mod(a, n):
-    #facterize a
-    #a = p1^e1 * p2^e2 * p3^e3 * ... * pk^ek
-    facterize(a)
-
-
-
+def huge_mod(n, a, power):
+    #returns a mod n
     if isPrime(n):
-        #if n is a prime number
-        #we can use Fermat's little theorem
-        littleFermat(n, a, power)
+        #facterize a
+        #a = p1^e1 * p2^e2 * p3^e3 * ... * pk^ek
+        """factors = facterize(a)     #this is very costly... need better implementation
+        print(factors)
+        for i in factors:
+            a, power = i"""
+            #if n is a prime number
+            #we can use Fermat's little theorem
+        mod_result = 1
+        mod_result *= littleFermat(n, a, power)
+        return mod_result % n
+    else:
+        #if n is not a prime number
+        #we can use Euler's theorem
+        pass
+
+
 
