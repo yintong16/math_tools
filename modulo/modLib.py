@@ -1,6 +1,79 @@
 
 import math # only for testing purposes
 
+
+def ceil(a):
+    #returns the smallest integer greater than or equal to a
+    #tested with unittest
+    if a == int(a):
+        return int(a)
+    elif a > 0:
+        return int(a) + 1
+    elif a < 0:
+        return int(a)
+    else:
+        return 0
+    
+def floor(a): 
+    #returns the largest integer less than or equal to a
+    #tested with unittest
+    if a == int(a):
+        return int(a)
+    elif a > 0:
+        return int(a)
+    elif a < 0:
+        return int(a) - 1
+    else:
+        return 0
+
+def sqrt(a, precision=0.0001):
+    #returns the square root of a
+    #tested with unittest
+    #This method is based on the Newton's method
+    '''
+    Proof:
+    Newton's Method: X_n+1 = Xn - f(Xn)/f'(Xn)
+    Let f(x) = x^2 - a
+    f'(x) = 2x
+    X_n+1 = Xn - (Xn^2 - a)/2Xn
+    X_n+1 = 1/2 * (Xn + a/Xn)
+    '''
+    if a <= 0:
+        raise ValueError("Input must be a positive number")
+    else:
+        x = a
+        while True:
+            root = 0.5 * (x + a/x)
+            if abs(root - x) < precision:
+                return root
+            x = root
+
+    
+def fast_reciprocal_sqrt(a):
+    #Magic number: 0x5F3759DF
+    '''
+    Original C code:
+    float Q_rsqrt(float number)
+        {
+        long i;
+        float x2, y;
+        const float threehalfs = 1.5F;
+
+        x2 = number * 0.5F;
+        y  = number;
+        i  = * ( long * ) &y;                       // evil floating point bit level hacking
+        i  = 0x5f3759df - ( i >> 1 );               // what the fuck?
+        y  = * ( float * ) &i;
+        y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration
+        // y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+
+        return y;
+        }
+    '''
+    
+    pass
+
+
 def isPrime(a):
     #returns True if a is a prime number, False otherwise
     #tested for a < 1000000
@@ -34,11 +107,10 @@ def gcd(a, b):
     else:
         return gcd(b, a % b)
 
-def facterize(a):
-    #returns a list of tuples of the prime factors of a and their powers
-    #tested for a < 1000000
+def naive_facterization(a):
+    #This problem is in NP
     factors = []
-    for i in range(2, int(a**0.5)+1):
+    for i in range(2, int(sqrt(a))+1):
         if isPrime(i):
             power = 0
             while a % i == 0:
@@ -50,9 +122,31 @@ def facterize(a):
         factors.append((a, 1))
     return factors
 
-
-def euler():
+def fermat_facterization(a):
+    #This method is is based on the representation of an odd integer as the difference of two squares: 
+    # a = x^2 - y^2 = (x+y)(x-y)
+    a = ceil(sqrt(a))
     pass
+
+def eular_phi(n):
+    phi = 0
+    for i in range(1, n):
+        if gcd(i, n) == 1:
+            phi += 1
+    return phi
+
+def euler(a,power, n):
+    #Euler's Phi function
+    #first a and n should be coprime
+    if gcd(a,n) == 1:
+    #first find the a^Phi(n) = 1 mod n
+        phi_n = eular_phi(n)
+        if power % phi_n == 0:
+            return 1
+        else:
+            return a**(power % phi_n) % n
+    else:
+        print("a and n are not coprime")
 
 
 def littleFermat(p, a, power):
@@ -77,8 +171,6 @@ def littleFermat(p, a, power):
             return littleFermat(p, a, (power%p) + (power//p))
         else:
             return a**power % p
-            
-            
     
 def huge_mod(n, a, power):
     #returns a mod n
@@ -99,5 +191,17 @@ def huge_mod(n, a, power):
         #we can use Euler's theorem
         pass
 
+def Euclidian_Algorithm(a, b):
+    if b == 0:
+        return a
+    else:
+        return Euclidian_Algorithm(b, a % b)
+
+def Extended_Euclidian_Algorithm(a, b):
+    if b == 0:
+        return (1, 0)
+    else:
+        (x, y) = Extended_Euclidian_Algorithm(b, a % b)
+        return (y, x - (a // b) * y)
 
 
