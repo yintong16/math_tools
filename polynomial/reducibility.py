@@ -28,3 +28,4 @@ def isIrreducible(polynomial, n):
         else:
             #TODO
             #if drg(p) == 4 do the facterization
+            pass

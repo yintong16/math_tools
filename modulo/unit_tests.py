@@ -54,5 +54,42 @@ class TestSqrtFunction(unittest.TestCase):
         self.assertAlmostEqual(ml.sqrt(2), 1.4142, places=4)
 
 
+class TestEularPhi(unittest.TestCase):
+    def test_eular_phi(self):
+        self.assertEqual(ml.eular_phi(1), 0)
+        self.assertEqual(ml.eular_phi(2), 1)
+        self.assertEqual(ml.eular_phi(3), 2)
+        self.assertEqual(ml.eular_phi(4), 2)
+        self.assertEqual(ml.eular_phi(5), 4)
+        self.assertEqual(ml.eular_phi(6), 2)
+        self.assertEqual(ml.eular_phi(10), 4)
+        self.assertEqual(ml.eular_phi(13), 12)
+
+class TestEulerFunction(unittest.TestCase):
+    def test_euler_coprime(self):
+        # Test cases where a and n are coprime
+        self.assertEqual(ml.euler_mod(2, 5, 9), 2**5 % 9)
+        self.assertEqual(ml.euler_mod(3, 4, 7), 3**4 % 7)
+    
+    def test_euler_not_coprime(self):
+        # Test case where a and n are not coprime, expecting None since the function prints instead of returning a value
+        self.assertIsNone(ml.euler_mod(2, 4, 4))
+    
+    def test_euler_power_zero(self):
+        # Test case where power is 0, should return 1 as anything to the power of 0 is 1
+        self.assertEqual(ml.euler_mod(3, 0, 7), 1)
+
+    def test_euler_phi_n_is_one(self):
+        # Test case where phi(n) is 1, which is the case for n=2, expecting a^0 % n which is 1
+        self.assertEqual(ml.euler_mod(3, 10, 2), 1)
+
+    def test_euler_phi_n_is_six(self):
+        # Test case where phi(n) is 1, which is the case for n=2, expecting a^0 % n which is 1
+        self.assertEqual(ml.euler_mod(5, 10, 7), 2)
+
+    
+
+
+
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main()#total test 21

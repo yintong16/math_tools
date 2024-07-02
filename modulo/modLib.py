@@ -98,6 +98,15 @@ def isPrime(a):
         else:
             return False
         
+def fast_isPrime(a):
+    '''
+    TODO: from 1 to sqrt(a) but also take out the 
+    multiples of numbers appeared before might need
+     to use a list to store all the numbers
+    '''
+    
+    pass
+        
 def gcd(a, b):
     #returns the greatest common divisor of a and b
     #using Euclidean algorithm
@@ -135,7 +144,8 @@ def eular_phi(n):
             phi += 1
     return phi
 
-def euler(a,power, n):
+def euler_mod(a,power, n):
+    #Tested with unittest
     #Euler's Phi function
     #first a and n should be coprime
     if gcd(a,n) == 1:
