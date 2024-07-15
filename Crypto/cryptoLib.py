@@ -1,5 +1,5 @@
 import timeit
-
+import _string
 
 
 def only_letters(X, case=None):

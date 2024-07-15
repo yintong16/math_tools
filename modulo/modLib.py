@@ -116,7 +116,7 @@ def gcd(a, b):
     else:
         return gcd(b, a % b)
 
-def naive_facterization(a):
+def naive_facterization(a) -> list:
     #This problem is in NP
     factors = []
     for i in range(2, int(sqrt(a))+1):
@@ -131,11 +131,47 @@ def naive_facterization(a):
         factors.append((a, 1))
     return factors
 
-def fermat_facterization(a):
+
+def isSquare(a):
+    if a < 0:
+        raise ValueError("Input must be a positive number")
+    
+    return floor(sqrt(a))**2 == a
+
+
+def fermat_facterization(N) -> list:
     #This method is is based on the representation of an odd integer as the difference of two squares: 
     # a = x^2 - y^2 = (x+y)(x-y)
-    a = ceil(sqrt(a))
-    pass
+    factors = []
+    while N % 2 == 0:
+        #take out 2 factors first, then we are left with an odd number
+        factors.append(2)
+        N = N // 2
+
+    a = ceil(sqrt(N))
+    b2 = a**2 - N
+    while not isSquare(b2):
+        a += 1
+        b2 = a**2 - N
+    b = sqrt(b2)
+
+
+    if isPrime(a+b):
+        factors.append(a+b)
+    else:
+        factors += fermat_facterization(a+b)
+
+    if isPrime(a-b):
+        factors.append(a-b)
+    else:
+        factors += fermat_facterization(a-b)
+
+    return factors
+
+    
+
+
+
 
 def eular_phi(n):
     phi = 0
