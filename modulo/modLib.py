@@ -26,7 +26,7 @@ def floor(a):
     else:
         return 0
 
-def sqrt(a, precision=0.0001):
+def sqrt(a, precision=0.000001):
     #returns the square root of a
     #tested with unittest
     #This method is based on the Newton's method
@@ -133,40 +133,51 @@ def naive_facterization(a) -> list:
 
 
 def isSquare(a):
-    if a < 0:
+    if a <= 0:
         raise ValueError("Input must be a positive number")
-    
     return floor(sqrt(a))**2 == a
 
 
 def fermat_facterization(N) -> list:
     #This method is is based on the representation of an odd integer as the difference of two squares: 
     # a = x^2 - y^2 = (x+y)(x-y)
+    if isPrime(N):
+        return [N]
     factors = []
     while N % 2 == 0:
         #take out 2 factors first, then we are left with an odd number
         factors.append(2)
         N = N // 2
-
-    a = ceil(sqrt(N))
-    b2 = a**2 - N
-    while not isSquare(b2):
-        a += 1
+    if N != 1:
+        a = ceil(sqrt(N))
         b2 = a**2 - N
-    b = sqrt(b2)
+        if b2 == 0:
+            factors.append(a)
+            factors.append(a)
+            return factors
+        while b2 > 0 and not isSquare(b2):
+            a += 1
+            b2 = a**2 - N
+        if b2 == 0:
+            factors.append(a)
+            factors.append(a)
+            return factors
+        else:
+            # Since here we know that b2 is a square number
+            b = round(sqrt(b2))
+        if isPrime(a+b):
+            factors.append(a+b)
+        else:
+            factors.extend(fermat_facterization(a+b))
 
-
-    if isPrime(a+b):
-        factors.append(a+b)
+        if isPrime(a-b):
+            factors.append(a-b)
+        else:
+            factors.extend(fermat_facterization(a-b))
+        if isPrime(a+b) and isPrime(a-b):
+            return factors
     else:
-        factors += fermat_facterization(a+b)
-
-    if isPrime(a-b):
-        factors.append(a-b)
-    else:
-        factors += fermat_facterization(a-b)
-
-    return factors
+        return factors
 
     
 

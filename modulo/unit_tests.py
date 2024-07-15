@@ -87,6 +87,33 @@ class TestEulerFunction(unittest.TestCase):
         # Test case where phi(n) is 1, which is the case for n=2, expecting a^0 % n which is 1
         self.assertEqual(ml.euler_mod(5, 10, 7), 2)
 
+class TestFermatFactorization(unittest.TestCase):
+    def test_even_number(self):
+        # Test factorization of an even number
+        self.assertEqual(sorted(ml.fermat_facterization(8)), [2, 2, 2])
+
+    def test_prime_number(self):
+        # Test factorization of a prime number (should return the number itself)
+        prime = 13
+        self.assertEqual(ml.fermat_facterization(prime), [prime])
+
+    def test_odd_composite_number(self):
+        # Test factorization of an odd composite number
+        self.assertEqual(sorted(ml.fermat_facterization(15)), [3, 5])
+
+    def test_large_number(self):
+        # Test factorization of a larger number
+        self.assertEqual(sorted(ml.fermat_facterization(100)), [2, 2, 5, 5])
+
+    def test_composits(self):
+        # Test factorization of a larger number
+        self.assertEqual(sorted(ml.fermat_facterization(42)), [2, 3, 7])
+
+    def test_very_large_prime(self):
+        # Test factorization of a very large prime number (for performance, not accuracy)
+        large_prime = 104729  # This is actually a prime number
+        self.assertEqual(ml.fermat_facterization(large_prime), [large_prime])
+
     
 
 
