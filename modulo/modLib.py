@@ -99,12 +99,29 @@ def isPrime(a):
             return False
         
 def fast_isPrime(a):
+    #This function uses Fermat's Little Theorem
+    #a^(p-1) = 1 mod p
+    if a < 2:
+        return False
+    if a == 2:
+        return True
+    else:
+        return 2**(a-1) % a == 1
+
+def genPrime(a):
+    #returns a list of prime numbers from 2 to a
+    primes = []
+    for i in range(2, a+1):
+        if isPrime(i):
+            primes.append(i)
+    return primes
+
+def fast_genPrime(a):
     '''
     TODO: from 1 to sqrt(a) but also take out the 
     multiples of numbers appeared before might need
      to use a list to store all the numbers
     '''
-    
     pass
         
 def gcd(a, b):
@@ -178,10 +195,6 @@ def fermat_facterization(N) -> list:
             return factors
     else:
         return factors
-
-    
-
-
 
 
 def eular_phi(n):
