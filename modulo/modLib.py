@@ -133,6 +133,12 @@ def gcd(a, b):
     else:
         return gcd(b, a % b)
 
+def fast_pow(a, power, p):
+    pass
+
+
+
+
 def naive_facterization(a) -> list:
     #This problem is in NP
     factors = []
