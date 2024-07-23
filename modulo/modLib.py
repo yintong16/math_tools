@@ -73,6 +73,9 @@ def fast_reciprocal_sqrt(a):
     
     pass
 
+def fast_pow(a, power, p):
+    pass
+
 
 def isPrime(a):
     #returns True if a is a prime number, False otherwise
@@ -98,15 +101,20 @@ def isPrime(a):
         else:
             return False
         
-def fast_isPrime(a):
+def fermat_isPrime(a):
     #This function uses Fermat's Little Theorem
     #a^(p-1) = 1 mod p
+    #This is a probabilistic algorithm
+    #This algorithm cannot exclude Carmichael numbers
     if a < 2:
         return False
     if a == 2:
         return True
     else:
-        return 2**(a-1) % a == 1
+        return fast_pow(2,a-1,a) == 1
+
+def miller_rabin_isPrime(a):
+    pass
 
 def genPrime(a):
     #returns a list of prime numbers from 2 to a
