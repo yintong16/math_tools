@@ -116,6 +116,9 @@ def fermat_isPrime(a):
 def miller_rabin_isPrime(a):
     pass
 
+def AKS_isPrime(a):
+    pass
+
 def genPrime(a):
     #returns a list of prime numbers from 2 to a
     primes = []
