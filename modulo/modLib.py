@@ -74,10 +74,20 @@ def fast_reciprocal_sqrt(a):
     pass
 
 def fast_pow(a, power, p):
-    pass
+    rtn  = 1
+
+    if a > p:
+        a = a % p
+    while power > 0:
+        if power % 2 == 1: #odd
+            rtn = (rtn * x) % p
+        y = y >> 1
+        x = (x * x) % p    
+    return rtn
 
 
-def isPrime(a):
+
+def naive_isPrime(a):
     #returns True if a is a prime number, False otherwise
     #tested for a < 1000000
     if a < 2:
@@ -119,6 +129,23 @@ def miller_rabin_isPrime(a):
 def AKS_isPrime(a):
     pass
 
+
+def isPrime(a):
+    # This method first check if a is fermat prime
+    # if it is then go to miller rabin test to make sure
+    fermat_status = fermat_isPrime(a)
+    if fermat_status:
+        miller_rabin_status = miller_rabin_isPrime(a)
+        if miller_rabin_status == "Probably Prime":
+            return True
+        elif miller_rabin_status == "Composite":
+            return False
+        else:
+            print(" Miller Rabin Test Failed")
+            print("Running AKS Test")
+            return AKS_isPrime(a)
+
+
 def genPrime(a):
     #returns a list of prime numbers from 2 to a
     primes = []
@@ -127,7 +154,7 @@ def genPrime(a):
             primes.append(i)
     return primes
 
-def fast_genPrime(a):
+def fast_genPrime(digits):
     '''
     TODO: from 1 to sqrt(a) but also take out the 
     multiples of numbers appeared before might need
@@ -143,11 +170,6 @@ def gcd(a, b):
         return a
     else:
         return gcd(b, a % b)
-
-def fast_pow(a, power, p):
-    pass
-
-
 
 
 def naive_facterization(a) -> list:
