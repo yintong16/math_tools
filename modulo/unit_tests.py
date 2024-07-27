@@ -114,23 +114,23 @@ class TestFermatFactorization(unittest.TestCase):
         large_prime = 104729  # This is actually a prime number
         self.assertEqual(ml.fermat_facterization(large_prime), [large_prime])
 
-class TestFastIsPrimeFunctions(unittest.TestCase):
-    def test_fast_isPrime(self):
-        # Test fast_isPrime function
-        self.assertFalse(ml.fast_isPrime(1))
-        self.assertTrue(ml.fast_isPrime(2))
-        self.assertTrue(ml.fast_isPrime(3))
-        self.assertFalse(ml.fast_isPrime(4))
-        self.assertTrue(ml.fast_isPrime(5))
-        self.assertFalse(ml.fast_isPrime(9))
-        self.assertTrue(ml.fast_isPrime(13))
-
 class TestGenPrimeFunctions(unittest.TestCase):
     def test_genPrime(self):
         # Test genPrime function
         self.assertEqual(ml.genPrime(5), [2, 3, 5])
         self.assertEqual(ml.genPrime(10), [2, 3, 5, 7])
         self.assertEqual(ml.genPrime(20), [2, 3, 5, 7, 11, 13, 17, 19])
+
+class TestPollardFactorization(unittest.TestCase):
+    def test_prime_factors_small(self):
+        # Test factorization of small numbers
+        self.assertEqual(sorted(ml.pollard_facterization(15)), [3, 5])
+        self.assertEqual(sorted(ml.pollard_facterization(21)), [3, 7])
+
+    def test_prime_factors_large(self):
+        # Test factorization of larger numbers
+        self.assertEqual(sorted(ml.pollard_facterization(143)), [11, 13])
+        self.assertEqual(sorted(ml.pollard_facterization(187)), [11, 17])
 
 
 

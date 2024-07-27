@@ -80,14 +80,14 @@ def fast_pow(a, power, p):
         a = a % p
     while power > 0:
         if power % 2 == 1: #odd
-            rtn = (rtn * x) % p
-        y = y >> 1
-        x = (x * x) % p    
+            rtn = (rtn * a) % p
+        power = power >> 1
+        a = (a * a) % p    
     return rtn
 
 
 
-def naive_isPrime(a):
+def isPrime(a):
     #returns True if a is a prime number, False otherwise
     #tested for a < 1000000
     if a < 2:
@@ -130,7 +130,8 @@ def AKS_isPrime(a):
     pass
 
 
-def isPrime(a):
+def _isPrime(a):
+    #NEED TESTING
     # This method first check if a is fermat prime
     # if it is then go to miller rabin test to make sure
     fermat_status = fermat_isPrime(a)
@@ -235,6 +236,17 @@ def fermat_facterization(N) -> list:
     else:
         return factors
 
+def pollard_facterization(N) -> list:
+    #Suppose that N is a product of two prime numbers
+    #N = p*q
+    a = 2
+    j = 2
+    while True:
+        a = fast_pow(a, j, N)
+        j += 1
+        d = gcd(a-1, N)
+        if d > 1 and d < N:
+            return [d, N//d]
 
 def eular_phi(n):
     phi = 0
