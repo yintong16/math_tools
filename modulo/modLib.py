@@ -75,7 +75,12 @@ def fast_reciprocal_sqrt(a):
 
 def fast_pow(a, power, p):
     rtn  = 1
-
+    if power < 0:
+        inverse = Extended_Euclidian_Algorithm(a, p)[0]
+        if inverse < 0:
+            inverse += p
+        a = inverse
+        power = -power
     if a > p:
         a = a % p
     while power > 0:
