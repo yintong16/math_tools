@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import numpy as np
+import math
 
 
 def EV_calculator(probabilities: list, values: list):
@@ -56,7 +57,9 @@ def run():
                     prize_value=[1000000, 10000, 1000, 500, 300, 100, 60, 50, 30], ticket_price=30)
         
     ]
-    for card in scratch_cards:
-        print(f"Expected value of {card.name} is: {lottery_EV(card.total, card.prize_number, card.prize_value, card.ticket_price)}")
 
+    for card in scratch_cards:
+        ev = lottery_EV(card.total, card.prize_number, card.prize_value, card.ticket_price)
+        print(f"Expected value of {card.name} is: {ev}")
+        print(f"rate of return: {ev/card.ticket_price}")
 run()
