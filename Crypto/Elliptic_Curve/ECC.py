@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from fractions import Fraction
-
+import sys
+sys.path.append('C:\\Users\\MAIN\\Desktop\\math_tools')
+from modulo import modLib as ml
 
 
 class EllipticCurve:
@@ -49,6 +51,18 @@ class EllipticCurve:
                 x3 = Fraction(x3).limit_denominator()
                 y3 = Fraction(y3).limit_denominator()
             return(x3, y3)
+    
+    
+    def count_integer_coordinates(self, x_range: int, y_range: int):
+        count = 0
+        for x in range(x_range):
+            for y in range(y_range):
+                y2 = x**3 + self.A*x + self.B
+                if ml.isSquare(y2):
+                    y = int(ml.sqrt(y2))
+                    count += 1 if y == 0 else 2
+                
+        return count
         
 
         
