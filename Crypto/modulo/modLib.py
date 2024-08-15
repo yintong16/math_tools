@@ -128,8 +128,37 @@ def fermat_isPrime(a):
     else:
         return fast_pow(2,a-1,a) == 1
 
-def miller_rabin_isPrime(a):
-    pass
+def factor_out_2(num):
+    '''Returns (power of 2, remainer q)'''
+    if (not isinstance(num, int)) or (num <= 0):
+        raise ValueError("Please input a positive integer.")
+    q,r = divmod(num, 2)
+    v = 0
+    while r == 0:
+        v += 1
+        num = q
+        q, r = divmod(q, 2)
+    return (v, num)
+
+def miller_rabin_isPrime(n, a):
+    # n = number to be tested
+    # a = Miller-Rabin witness
+    if n % 2 == 0:
+        return "Composite"
+    if 1 < gcd(n, a) < n:
+        return "Composite"
+    
+    n_1 = factor_out_2(n-1)
+    k = n_1[0]
+    q = n_1[1]
+    a = pow(a, q, n)
+    if a == 1:
+        return "Test Fails"
+    for i in range(k):
+        if a == n-1:
+            return "Test Fails"
+        a = pow(a, 2, n)
+    return "Composite"
 
 def AKS_isPrime(a):
     pass
