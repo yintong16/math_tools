@@ -48,6 +48,12 @@ def sqrt(a, precision=0.000001):
                 return root
             x = root
 
+
+def swap(a, b):
+    a = a^b
+    b = a^b
+    a = a^b
+    return a, b
     
 def fast_reciprocal_sqrt(a):
     #Magic number: 0x5F3759DF

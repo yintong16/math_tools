@@ -92,15 +92,53 @@ class EllipticCurveFiniteField:
             if P == Q:
                 numerator = (3*x1**2 + self.A) % self.p
                 denominator = (2*y1) % self.p
+                if ml.gcd(denominator, self.p) > 1:
+                    print("gcd > 1 when denominator = ", denominator)
+                    raise ValueError
                 inverse = ml.Extended_Euclidian_Algorithm(denominator, self.p)[0]
                 slope = (numerator * inverse) % self.p
-                print("Lambda = ", slope)
+                # print("Lambda = ", slope)
             else:
                 numerator = (y2 - y1) % self.p
                 denominator = (x2 - x1) % self.p
+                if ml.gcd(denominator, self.p) > 1:
+                    print("gcd > 1 when denominator = ", denominator)
+                    raise ValueError
                 inverse = ml.Extended_Euclidian_Algorithm(denominator, self.p)[0]
                 slope = (numerator * inverse) % self.p
-                print("Lambda = ", slope)
+                # print("Lambda = ", slope)
             x3 = (slope**2 - x1 - x2) % self.p
             y3 = (slope*(x1 - x3) - y1) % self.p
             return(x3, y3)
+        
+    def pow(self, P: tuple, power):
+        if power < 0:
+            inverse = -P[1] # inverse of (x, y) = (x, -y)
+            while inverse < 0:
+                inverse += self.p
+            P = (P[0], inverse)
+            power = -power
+        Q = P
+        R = self.INF
+        while power > 0:
+            if power % 2 == 1: #odd
+                R = self.add(R, Q)
+            Q = self.add(Q, Q)
+            power = power >> 1
+        return R
+
+
+def EC_Lenstra_fatorization(N, A, B, P: tuple):
+    # N is the numeber to be factored 
+    ec = EllipticCurveFiniteField(A, B, N)
+    try:
+        i = 1
+        nP = P
+        while True:
+            i += 1
+            nP = ec.pow(nP, i)
+            print(f"{i}!P = {nP}")
+    except ValueError:
+        print("Failed at: ", i, "!")
+        
+
