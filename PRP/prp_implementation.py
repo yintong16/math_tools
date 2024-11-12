@@ -118,4 +118,4 @@ def find_cycle():
         output = prp.evaluate(output)
     print(counter)
 
-find_cycle()
+find_cycle()# takes forever to run, need a smaller key size
