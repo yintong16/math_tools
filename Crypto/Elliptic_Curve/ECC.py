@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from fractions import Fraction
 import sys
-sys.path.append('C:\\Users\\MAIN\\Desktop\\math_tools\\Crypto')
+sys.path.append('C:\\Users\\YintongLuo\\Desktop\\math_tools\\Crypto')
 from modulo import modLib as ml
 
 
@@ -10,6 +10,7 @@ class EllipticCurve:
 
     INF = (float('inf'), float('inf'))
 
+    #simply version of elliptic curve
     def __init__(self, A, B):
         self.A = A
         self.B = B
@@ -43,10 +44,12 @@ class EllipticCurve:
         else:
             if P == Q:
                 slope = (3*x1**2 + self.A) / (2*y1) #Tangent line
+                print("Lambda = ", slope)
             else:
                 slope = (y2 - y1) / (x2 - x1)
             x3 = slope**2 - x1 - x2
             y3 = slope*(x1 - x3) - y1
+            print(slope, x1, x2)
             if faction:
                 x3 = Fraction(x3).limit_denominator()
                 y3 = Fraction(y3).limit_denominator()
@@ -142,3 +145,28 @@ def EC_Lenstra_fatorization(N, A, B, P: tuple):
         print("Failed at: ", i, "!")
         
 
+class WeierstrassEllipticCurve:
+    INF = (float('inf'), float('inf'))
+
+    #simply version of elliptic curve
+    def __init__(self, a1, a2, a3, a4, a6):
+        self.a1 = a1
+        self.a2 = a2
+        self.a3 = a3
+        self.a4 = a4
+        self.a6 = a6
+
+    
+    
+    def plot_elliptic_curve(self):
+        x = np.linspace(-10, 10, 400)
+        y = np.linspace(-10, 10, 400)
+        X, Y = np.meshgrid(x, y)
+        F = Y**2 + self.a1*X*Y + self.a3*Y - X**3 - self.a2*X**2 - self.a4*X - self.a6
+        plt.contour(X, Y, F, [0], colors='r')
+        plt.grid()
+        plt.show()
+
+
+    def add(self, P: tuple, Q: tuple, faction=False):
+        pass
